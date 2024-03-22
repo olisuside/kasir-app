@@ -16,6 +16,7 @@ export default class App extends Component {
       menus: [],
       categoryItem: 'Makanan',
       keranjangs: [],
+      del : [],
     }
   };
 
@@ -29,7 +30,7 @@ export default class App extends Component {
         console.log(error);
       });
 
-      axios.get(API_URL + "keranjangs")
+    axios.get(API_URL + "keranjangs")
       .then((res) => {
         const keranjangs = res.data;
         this.setState({ keranjangs });
@@ -40,15 +41,15 @@ export default class App extends Component {
   };
 
   componentDidUpdate(prevState) {
-    if(this.state.keranjangs !== prevState.keranjangs) {
+    if (this.state.keranjangs !== prevState.keranjangs) {
       axios.get(API_URL + "keranjangs")
-      .then((res) => {
-        const keranjangs = res.data;
-        this.setState({ keranjangs });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        .then((res) => {
+          const keranjangs = res.data;
+          this.setState({ keranjangs });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 
@@ -111,37 +112,29 @@ export default class App extends Component {
       });
 
   }
-  render() {
-    const { menus, categoryItem, keranjangs } = this.state
-    return (
-      <>
-        <div className="container mx-auto max-w-screen-2xl">
-          <NavbarComponent />
-          <div className="grid grid-col-3 md:grid-cols-9 gap-3">
-            <div className="col-span-1 md:col-span-2 mb-4">
-              <CategoryList changeCategory={this.changeCategory} categoryItem={categoryItem} />
-            </div>
-            <div className="col-span-1 md:col-span-5 mb-4">
-              <Card className="px-2 py-2 w-full">
-                <h1 className="text-2xl px-4 font-bold text-black my-4">PRODUK</h1>
-                <hr />
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-
-                  {menus.map((menu) => {
-                    return <ProductList menu={menu} key={menu.id} addCart={this.addCart} />
-                  })}
-                </div>
-              </Card>
-            </div>
-            <div className="col-span-1 md:col-span-2 mb-4">
-              <CartList keranjangs={keranjangs} />
-            </div>
+  
+render() {
+  const { menus, categoryItem, keranjangs, } = this.state
+  return (
+    <>
+      <div className="container mx-auto max-w-screen-2xl">
+        <NavbarComponent />
+        <div className="grid grid-col-3 md:grid-cols-9 gap-3">
+          <div className="col-span-1 md:col-span-2 mb-4">
+            <CategoryList changeCategory={this.changeCategory} categoryItem={categoryItem} />
+          </div>
+          <div className="col-span-1 md:col-span-5 mb-4">
+            <ProductList menus={menus} addCart={this.addCart} />
+          </div>
+          <div className="col-span-1 md:col-span-2 mb-4">
+            <CartList keranjangs={keranjangs} />
           </div>
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 
-  }
+}
 
 }
