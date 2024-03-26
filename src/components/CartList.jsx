@@ -8,6 +8,7 @@ import {
 
     Chip,
     ListItemPrefix,
+    CardFooter,
 } from "@material-tailwind/react";
 import { Component } from "react";
 import  axios  from "axios";
@@ -42,12 +43,13 @@ export default class CartList extends Component {
             });
     }
     render() {
-        const { keranjangs, delCart } = this.props;
+        const { keranjangs, } = this.props;
 
         return (
-            <Card className="">
+            <Card className="h-[80vh]">
                 <Typography variant="h4" className="px-6 py-2">Keranjang</Typography>
                 <hr />
+                <div className="overflow-auto scrollbar-thin scrollbar-webkit mb-28">
                 {keranjangs.length !== 0 && (
                     <List>
                         {keranjangs.map((keranjang) => (
@@ -82,7 +84,11 @@ export default class CartList extends Component {
                     </List>
                 )
                 }
+                </div>
+                <div className="absolute bottom-0">
+                <Typography variant="h6" className="px-6 py-2">Total Harga : Rp. 1000000</Typography>
 
+                </div>
             </Card>
         );
     }
