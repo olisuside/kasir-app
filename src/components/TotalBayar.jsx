@@ -1,4 +1,4 @@
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { Component } from "react";
 
 export default class TotalBayar extends Component {
@@ -9,8 +9,9 @@ export default class TotalBayar extends Component {
             }, 0
         )
         return (
-            <div className="absolute bottom-0">
-                <Typography variant="h6" className="px-6 py-2">Total Harga : Rp. {totalBayar}</Typography>
+            <div className="absolute bottom-0 w-full px-2 py-2 grid justify-items-center">
+                <Typography variant="h6" className="px-6">Total Harga : Rp. {totalBayar}</Typography>
+                <Button fullWidth variant="filled" className="bg-indigo-500"> Button</Button>
                 </div>
         );
     }

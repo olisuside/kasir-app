@@ -12,13 +12,13 @@ export default class ProductList extends Component {
     const { menus, addCart } = this.props;
     return (
       <>
-        <Card className="px-2 py-2 w-full">
+        <Card className="px-2 py-2 w-full max-h-[80vh]">
           <h1 className="text-2xl px-4 font-bold text-black my-4">PRODUK</h1>
           <hr />
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="overflow-auto scrollbar-thin scrollbar-webkit">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
             {menus && menus.map((menu) => (
-              <Card className="w-auto">
+              <Card className="w-auto mb-1">
                 <CardHeader shadow={false} floated={false} className="h-36">
                   <img
                     src={"./src/assets/images/" + menu.category.nama.toLowerCase() + "/" + menu.gambar}
@@ -45,6 +45,7 @@ export default class ProductList extends Component {
                 </CardFooter>
               </Card>
             ))}
+          </div>
           </div>
         </Card>
       </>
