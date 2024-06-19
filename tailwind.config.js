@@ -19,15 +19,15 @@ module.exports = withMT({
         },
         ".scrollbar-webkit": {
           "&::-webkit-scrollbar": {
-            width: "6px",
+            width: "2px",
           },
           "&::-webkit-scrollbar-track": {
             background: "rgba(0, 0, 0, 0.2)",
           },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "rgba(0, 0, 0, 0.2)",
-            borderRadius : "20px",
-            border : "1px solid white" 
+            borderRadius : "10px",
+            border : "1px transparent white" 
           },
         },
         
