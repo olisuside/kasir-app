@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     List,
     ListItem,
@@ -5,14 +6,18 @@ import {
     Card,
     IconButton,
     Typography,
-
     Chip,
     ListItemPrefix,
     CardFooter,
 } from "@material-tailwind/react";
+<<<<<<< HEAD
 import { Component } from "react";
 import axios from "axios";
+=======
+import axios from 'axios';
+>>>>>>> b8e6bb1f56836111bbf8fb8c0da64e434f358ab9
 import { API_URL } from "../utils/constants";
+import TotalBayar from "./TotalBayar";
 
 function TrashIcon() {
     return (
@@ -31,8 +36,10 @@ function TrashIcon() {
     );
 }
 
-export default class CartList extends Component {
+function CartList({ keranjangs }) {
+    const [keranjangsState, setKeranjangsState] = useState(keranjangs);
 
+<<<<<<< HEAD
     delCart = (value) => {
         axios.delete(API_URL + "keranjangs/" + value.id)
             .then((res) => {
@@ -97,3 +104,65 @@ export default class CartList extends Component {
         );
     }
 }
+=======
+  console.log("Received keranjangs:", keranjangsState);
+    const delCart = async (keranjang) => {
+        try {
+            await axios.delete(API_URL + "keranjangs/" + keranjang.id);
+            setKeranjangsState((prevKeranjangs) => prevKeranjangs.filter((item) => item.id !== keranjang.id));
+            console.log("Item deleted successfully");
+        } catch (error) {
+            console.log("Error deleting item:", error);
+        }
+    };
+
+    return (
+        <Card className="h-[80vh]">
+      <Typography variant="h4" className="px-6 py-2">Keranjang</Typography>
+      <hr />
+      <div className="overflow-auto scrollbar-thin scrollbar-webkit mb-20">
+        {keranjangsState.length !== 0 && (
+          <List>
+            {keranjangsState.map((keranjang) => (
+              <ListItem ripple={false} className="py-1 pr-1 pl-4" key={keranjang.id}>
+                <ListItemPrefix>
+                  <Chip
+                    value={keranjang.jumlah}
+                    variant="ghost"
+                    size="md"
+                    className="rounded-full"
+                  />
+                </ListItemPrefix>
+                <div>
+                  <Typography variant="h6" color="blue-gray">
+                    {keranjang.product.nama}
+                  </Typography>
+                  <Typography variant="small" color="gray" className="font-normal">
+                    Rp. {keranjang.total_harga}
+                  </Typography>
+                </div>
+                <ListItemSuffix>
+                  <IconButton variant="text" color="blue-gray" onClick={() => delCart(keranjang)}>
+                    <TrashIcon />
+                  </IconButton>
+                </ListItemSuffix>
+              </ListItem>
+            ))}
+          </List>
+        )}
+        {keranjangsState.length === 0 && (
+            <List>
+                <ListItem ripple={false} className="py-1 pr-1 pl-4" >
+                <Typography variant="h6" color="blue-gray">KOSONG </Typography>
+                </ListItem>
+            </List>
+                )
+            } {/* Added loading state */}
+      </div>
+      <TotalBayar keranjangs={keranjangsState} />
+    </Card>
+    );
+}
+
+export default CartList;
+>>>>>>> b8e6bb1f56836111bbf8fb8c0da64e434f358ab9
