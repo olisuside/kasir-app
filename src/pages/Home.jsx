@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import CategoryList from "../components/CategoryList";
-import NavbarComponent from "../components/NavbarComponent";
 import ProductList from "../components/ProductList";
 import CartList from "../components/CartList";
 import { API_URL } from "../utils/constants";
@@ -31,16 +30,26 @@ function Home() {
 
   const addCart = useCallback(async (menu) => {
     try {
+      // Cek apakah produk sudah ada di keranjang
       const existingItem = keranjangs.find((item) => item.product.id === menu.id);
 
       if (existingItem) {
-        const updatedItem = { ...existingItem, jumlah: existingItem.jumlah + 1, total_harga: existingItem.total_harga + menu.harga };
+        const updatedItem = {
+          ...existingItem,
+          jumlah: existingItem.jumlah + 1,
+          total_harga: existingItem.total_harga + menu.harga,
+        };
         await axios.put(`${API_URL}keranjangs/${existingItem.id}`, updatedItem);
       } else {
-        const newItem = { product: menu, jumlah: 1, total_harga: menu.harga };
+        const newItem = {
+          product: menu,
+          jumlah: 1,
+          total_harga: menu.harga,
+        };
         await axios.post(`${API_URL}keranjangs`, newItem);
       }
 
+      // Update state dengan mengambil data terbaru dari server
       const updatedKeranjangs = await axios.get(`${API_URL}keranjangs`);
       setKeranjangs(updatedKeranjangs.data);
     } catch (error) {
@@ -49,21 +58,17 @@ function Home() {
   }, [keranjangs]);
 
   return (
-    <>
-      
-      <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
-        <div className="col-span-1 md:col-span-2 mb-4">
-          <CategoryList changeCategory={changeCategory} categoryItem={categoryItem} />
-        </div>
-        <div className="col-span-1 md:col-span-5 mb-4">
-          <ProductList menus={menus} addCart={addCart} />
-        </div>
-        <div className="col-span-1 md:col-span-2 mb-4">
-        <CartList keranjangs={keranjangs} setKeranjangs={setKeranjangs} />
-
-        </div>
+    <div className="grid grid-cols-3 md:grid-cols-9 gap-3">
+      <div className="col-span-1 md:col-span-2 mb-4">
+        <CategoryList changeCategory={changeCategory} categoryItem={categoryItem} />
       </div>
-    </>
+      <div className="col-span-1 md:col-span-5 mb-4">
+        <ProductList menus={menus} addCart={addCart} />
+      </div>
+      <div className="col-span-1 md:col-span-2 mb-4">
+        <CartList keranjangs={keranjangs} setKeranjangs={setKeranjangs} />
+      </div>
+    </div>
   );
 }
 

@@ -29,6 +29,9 @@ export default class Sukses extends Component {
                     <Link to={"/"}>
                     <Button variant="text" size="md" color="blue">Kembali Ke Home</Button>
                     </Link>
+                    <Link to={"/pesanan"}>
+                    <Button variant="text" size="md" color="blue">Lihat Pesanan</Button>
+                    </Link>
                 </CardFooter>
             </Card>
             </div>

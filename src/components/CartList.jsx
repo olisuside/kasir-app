@@ -31,7 +31,7 @@ function TrashIcon() {
   );
 }
 
-function CartList({ keranjangs, setKeranjangs }) {
+function CartList({ keranjangs = [], setKeranjangs }) {
   const navigate = useNavigate();
 
   const delCart = async (item) => {
@@ -45,12 +45,13 @@ function CartList({ keranjangs, setKeranjangs }) {
 
   const handleBayar = async () => {
     try {
-      if (keranjangs.length === 0) return;
+      if (!keranjangs || keranjangs.length === 0) return;
 
-      // Kirim data ke API pesanan
+      // Kirim data ke API pesanan dengan status "Belum Diantar"
       await axios.post("http://localhost:3000/pesanans", {
         items: keranjangs,
-        total_harga: keranjangs.reduce((acc, item) => acc + (item.total_harga || 0), 0),
+        total_harga: (keranjangs || []).reduce((acc, item) => acc + (item.total_harga || 0), 0),
+        status: "Belum Diantar",
       });
 
       // Hapus semua item dari server
@@ -68,7 +69,7 @@ function CartList({ keranjangs, setKeranjangs }) {
     }
   };
 
-  const totalHarga = keranjangs.reduce((acc, item) => acc + (item.total_harga || 0), 0);
+  const totalHarga = (keranjangs || []).reduce((acc, item) => acc + (item.total_harga || 0), 0);
 
   return (
     <Card className="h-[80vh] p-4 relative">
@@ -104,7 +105,7 @@ function CartList({ keranjangs, setKeranjangs }) {
       </div>
       <div className="absolute bottom-4 left-0 w-full px-6">
         <Typography variant="h6">Total Harga: Rp. {totalHarga.toLocaleString("id-ID")}</Typography>
-        <Button color="blue" className="mt-2 w-full" onClick={handleBayar} disabled={keranjangs.length === 0}>
+        <Button color="blue" className="mt-2 w-full" onClick={handleBayar} disabled={!keranjangs || keranjangs.length === 0}>
           Bayar
         </Button>
       </div>
