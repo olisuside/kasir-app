@@ -14,3 +14,4 @@ Untuk menjalankan backend JSON, gunakan repository berikut:
    ```sh
    npm install
    npm run dev
+3. Pastikan jalankan backend
