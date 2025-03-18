@@ -1,6 +1,4 @@
-# React + Vite
-
-## KASIR APP
+# REACT KASIR APP
 
 Aplikasi kasir menggunakan React + Vite dan JSON Server sebagai Fake API.
 
