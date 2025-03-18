@@ -16,9 +16,10 @@ export default class ProductList extends Component {
           <h1 className="text-2xl px-4 font-bold text-black my-4">PRODUK</h1>
           <hr />
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {menus && menus.map((menu) => (
-              <Card className="w-auto">
+          {/* Tambahkan max-h & overflow agar scrollable */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 max-h-[69vh] overflow-y-auto">
+            {menus && menus.map((menu, index) => (
+              <Card key={index} className="w-auto">
                 <CardHeader shadow={false} floated={false} className="h-36">
                   <img
                     src={"./src/assets/images/" + menu.category.nama.toLowerCase() + "/" + menu.gambar}
@@ -34,7 +35,7 @@ export default class ProductList extends Component {
                     Rp.{menu.harga}
                   </Typography>
                 </CardBody>
-                <CardFooter className="pt-0 ">
+                <CardFooter className="pt-0">
                   <Button
                     ripple={true}
                     fullWidth={true}
